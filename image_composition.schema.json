@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org",
+  "$id": "https://image-composition.com",
+  "title": "Image Composition",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title of the image composition."
+    },
+    "composition_description": {
+      "type": "string",
+      "description": "The description of the image composition. May be part of a prompt."
+    },
+    "regions": {
+      "type": "array",
+      "description": "The regions defining the layering and layout of an image composition. The order of the regions is the order of rendering, i.e., the last region is the foremost foreground element.",
+      "items" : {
+        "type": "object",
+        "properties": {
+          "region_type": {
+            "type": "string",
+            "enum" : ["text", "icon", "image", "other"]
+          },
+          "region_shape": {
+            "type": "string",
+            "enum" : ["circle", "square", "rectangle", "ellipse", "polygon", "other"]
+          },
+          "region_description": {
+            "type": "string",
+            "description": "A semantic description of the expected contents of the region. May be part of a prompt."
+          },
+          "region_metadata": {
+            "type": "object",
+            "description": "The metadata of the region. Should only contain arbitrary details for non-LLM generated regions, e.g., text, etc."
+          },
+          "origin": {
+            "type": "array",
+            "description": "The origin of the region in the image as (x, y) discrete coordinates. For circles and ellipses, the origin is the center. For squares, rectangles, and polygons, the origin is the first point. For other shapes, the origin is the center of the shape.",
+            "prefixItems": [
+              { "type": "number" },
+              { "type": "number" }
+            ],
+            "minItems": 2,
+            "maxItems": 2,
+            "unevaluatedItems": false
+          }, 
+          "orientation": {
+            "type": "number",
+            "description": "The rotation of the region in degrees. For circles and ellipses, the rotation is the angle of the major axis. For squares, rectangles, and polygons, the rotation is the angle of the first point. For other shapes, the rotation is the angle of the center of the shape.",
+            "minimum": -360,
+            "maximum": 360
+          },
+          "ellipse_attribute": {
+            "oneOf": [
+              {
+                "description": "Attributes for circles: just the radius.",
+                "type": "object",
+                "properties": {
+                  "radius": {
+                    "type": "number",
+                    "description": "Radius of the circle."
+                  }
+                },
+                "required": ["radius"],
+                "additionalProperties": false
+              },
+              {
+                "description": "Attributes for ellipses: vertical axis, horizontal axis, and eccentricity.",
+                "type": "object",
+                "properties": {
+                  "vertical_axis_length": {
+                    "type": "number",
+                    "description": "Length of the vertical axis of the ellipse."
+                  },
+                  "horizontal_axis_length": {
+                    "type": "number",
+                    "description": "Length of the horizontal axis of the ellipse."
+                  },
+                  "eccentricity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Eccentricity of the ellipse (0: circle, <1: ellipse)."
+                  }
+                },
+                "required": ["vertical_axis_length", "horizontal_axis_length", "eccentricity"],
+                "additionalProperties": false
+              },
+              {
+                "description": "For all other region types: null or empty object.",
+                "anyOf": [
+                  { "type": "null" },
+                  {
+                    "type": "object",
+                    "maxProperties": 0,
+                    "description": "Empty object for non-circle/ellipse shapes."
+                  }
+                ]
+              }
+            ]
+          },
+          "points" : {
+            "type": "array",
+            "description": "The relevant region points as (x, y) discrete coordinates. For circles and ellipses, the points are the circumference. For squares, rectangles, and polygons, the points are the vertices. For other shapes, the points are the relevant points of the shape.",
+            "items" : {
+              "type": "array",
+              "prefixItems": [
+                { "type": "number" },
+                { "type": "number" }
+              ],
+              "minItems": 2,
+              "maxItems": 2,
+              "unevaluatedItems": false
+            }
+          }
+        },
+        "required": ["region_type", "region_shape", "region_description", "origin"]
+      }
+    }
+  },
+  "required": ["title", "composition_description", "regions"]
+}

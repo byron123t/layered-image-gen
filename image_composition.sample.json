@@ -1,0 +1,56 @@
+{
+  "title": "Launch Promo Poster",
+  "composition_description": "A promotional poster with a gradient background, centered headline text, and a foreground rocket icon.",
+  "regions": [
+    {
+      "region_type": "background",
+      "region_shape": "rectangle",
+      "region_description": "Full-canvas gradient background from deep blue to purple.",
+      "region_metadata": {
+        "fill_type": "linear_gradient",
+        "start_color": "#0B1E5B",
+        "end_color": "#5A2EA6"
+      },
+      "origin": [0, 0],
+      "orientation": 0,
+      "ellipse_attribute": {},
+      "points": [[0, 0], [1200, 0], [1200, 628], [0, 628]]
+    },
+    {
+      "region_type": "text",
+      "region_shape": "rectangle",
+      "region_description": "Primary headline text: 'Launch Day' centered in the upper-middle area.",
+      "region_metadata": {
+        "text": "Launch Day",
+        "font_family": "Inter",
+        "font_weight": 700,
+        "font_size": 86,
+        "color": "#FFFFFF",
+        "alignment": "center"
+      },
+      "origin": [600, 180],
+      "orientation": 0,
+      "ellipse_attribute": null,
+      "points": [[220, 120], [980, 120], [980, 260], [220, 260]]
+    },
+    {
+      "region_type": "icon",
+      "region_shape": "ellipse",
+      "region_description": "Foreground rocket icon inside an elliptical highlight near the center.",
+      "region_metadata": {
+        "icon_name": "rocket",
+        "icon_style": "filled",
+        "icon_color": "#FFD166",
+        "glow": true
+      },
+      "origin": [600, 360],
+      "orientation": 15,
+      "ellipse_attribute": {
+        "vertical_axis_length": 220,
+        "horizontal_axis_length": 300,
+        "eccentricity": 0.68
+      },
+      "points": [[450, 360], [600, 250], [750, 360], [600, 470]]
+    }
+  ]
+}

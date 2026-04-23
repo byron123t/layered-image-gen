@@ -1,0 +1,14 @@
+[project]
+name = "layered-image-gen"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "httpx>=0.28.1",
+    "matplotlib>=3.9.4",
+    "numpy>=2.0.2",
+    "openai>=2.32.0",
+    "pillow>=11.3.0",
+    "requests>=2.32.5",
+]
